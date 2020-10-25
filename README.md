@@ -1,0 +1,2 @@
+# _stupidcode
+for college
