@@ -1,0 +1,13 @@
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.exe
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.deps.json
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.runtimeconfig.json
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.runtimeconfig.dev.json
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.dll
+C:\Users\user\source\repos\HomeYo\bin\Debug\netcoreapp3.1\HomeYo.pdb
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.csprojAssemblyReference.cache
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.AssemblyInfoInputs.cache
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.AssemblyInfo.cs
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.dll
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.pdb
+C:\Users\user\source\repos\HomeYo\obj\Debug\netcoreapp3.1\HomeYo.genruntimeconfig.cache
