@@ -1,0 +1,26 @@
+﻿<Window x:Class="WpfApp1.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Регистрация нового пользователя" Height="450" Width="800">
+    <Grid>
+        <TextBox Name="TBname" HorizontalAlignment="Left" Height="23" Margin="345,112,0,0" TextWrapping="Wrap" Text="Имя" VerticalAlignment="Top" Width="120" UndoLimit="98" TextChanged="TBname_TextChanged"/>
+        <TextBox Name="Surname" HorizontalAlignment="Left" Height="23" Margin="345,140,0,0" TextWrapping="Wrap" Text="Фамилия" VerticalAlignment="Top" Width="120" TextChanged="Surname_TextChanged"/>
+        <TextBox Name="Email" HorizontalAlignment="Left" Height="23" Margin="345,168,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="Phone" HorizontalAlignment="Left" Height="23" Margin="345,196,0,0" TextWrapping="Wrap" Text="Телефон" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="Age" HorizontalAlignment="Left" Height="23" Margin="345,224,0,0" TextWrapping="Wrap" Text="Возраст" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="ID" HorizontalAlignment="Left" Height="23" Margin="345,252,0,0" TextWrapping="Wrap" Text="ID" VerticalAlignment="Top" Width="120" IsEnabled="False"/>
+        <Label Content="Имя нового пользователя:" HorizontalAlignment="Left" Margin="114,112,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Фамилия:" HorizontalAlignment="Left" Margin="114,136,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Email:" HorizontalAlignment="Left" Margin="114,167,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Телефон:" HorizontalAlignment="Left" Margin="114,196,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Возраст:" HorizontalAlignment="Left" Margin="114,224,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="ID:" HorizontalAlignment="Left" Margin="114,250,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="*ID генерируется автоматически&#xD;&#xA;на основе хеш-функции&#xD;&#xA;&#xD;&#xA;" HorizontalAlignment="Left" Margin="114,281,0,0" VerticalAlignment="Top" Height="72" Width="200"/>
+        <Button Content="Регистрация" HorizontalAlignment="Left" Margin="281,338,0,0" VerticalAlignment="Top" Width="170" Click="Button_Click"/>
+
+    </Grid>
+</Window>
