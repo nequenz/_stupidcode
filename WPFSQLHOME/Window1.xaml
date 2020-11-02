@@ -1,0 +1,25 @@
+﻿<Window x:Class="WpfApp1.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Запись счета" Height="450" Width="676.445">
+    <Grid>
+        <TextBox Name="payer" HorizontalAlignment="Left" Height="23" Margin="345,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" UndoLimit="98" TextChanged="TBname_TextChanged"/>
+        <TextBox Name="recipient" HorizontalAlignment="Left" Height="23" Margin="345,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="Surname_TextChanged"/>
+        <TextBox Name="sum" HorizontalAlignment="Left" Height="23" Margin="345,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="currency" HorizontalAlignment="Left" Height="23" Margin="345,196,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="date" HorizontalAlignment="Left" Height="23" Margin="345,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="comment" HorizontalAlignment="Left" Height="63" Margin="345,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="313"/>
+        <Label Content="Payer email:" HorizontalAlignment="Left" Margin="114,112,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Recipent email:" HorizontalAlignment="Left" Margin="114,136,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Sum:" HorizontalAlignment="Left" Margin="114,167,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Currency:" HorizontalAlignment="Left" Margin="114,196,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Date:" HorizontalAlignment="Left" Margin="114,224,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="Comment:" HorizontalAlignment="Left" Margin="114,250,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button Content="Запись" HorizontalAlignment="Left" Margin="114,295,0,0" VerticalAlignment="Top" Width="170" Click="Button_Click"/>
+
+    </Grid>
+</Window>
