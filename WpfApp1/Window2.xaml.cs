@@ -28,67 +28,68 @@ namespace WpfApp1
 
         private void Window_Loaded(object Sender, RoutedEventArgs e)
         {
-            MainWindow.openConnection();
-
-            MainWindow.SQL              = "USE Users; SELECT [ID], [Name], [Surname], [Email], [Phone], [Age] FROM UserEntity;";
-            MainWindow.cmd.CommandType  = CommandType.Text;
-            MainWindow.cmd.CommandText  = MainWindow.SQL;
-
-            MainWindow.Adapter.SelectCommand = MainWindow.cmd;
-            MainWindow.Adapter.Fill(MainWindow.DT);
-
-            
-
-
-            SQLGrid.ItemsSource = MainWindow.DT.DefaultView;
-
-            MainWindow.closeConnection();
 
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.openConnection();
-            if (MainWindow.DT.Rows.Count <= 0)
-            {
-                MainWindow.SQL = "USE Users; SELECT [ID], [Name], [Surname], [Email], [Phone], [Age] FROM UserEntity;";
-                MainWindow.cmd.CommandType = CommandType.Text;
-                MainWindow.cmd.CommandText = MainWindow.SQL;
-
-                MainWindow.Adapter.SelectCommand = MainWindow.cmd;
-                MainWindow.Adapter.Fill(MainWindow.DT);
-            }
-
-            MainWindow.Adapter.Update(MainWindow.DT);
-            MainWindow.closeConnection();
 
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow.openConnection();
 
-           
-            MainWindow.SQL              = "USE Users; " + SqlTextBox.Text;
-            MainWindow.cmd.CommandType  = CommandType.Text;
-            MainWindow.cmd.CommandText  = MainWindow.SQL;
-            try
+        }
+
+        private void AddressBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+            List<string> NamesList = Folder.getNamesFromFilter(AddressBox.Text);
+
+            if (NamesBox != null)
             {
-                MainWindow.SqlReader = MainWindow.cmd.ExecuteReader();
+                NamesBox.Items.Clear();
             }
-            catch (SqlException)
+            
+            if (NamesList.Count == 0)
             {
-                MessageBox.Show("Неверная интерпретация команд");
-                MainWindow.closeConnection();
                 return;
             }
 
-            MainWindow.DT.Clear();
-            MainWindow.DT.Load(MainWindow.SqlReader);
+            foreach(string name in NamesList)
+            {
+                NamesBox.Items.Add(name);
+            }
 
-            MainWindow.closeConnection();
 
         }
+
+        private void NamesBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (NamesBox.SelectedItem != null)
+            {
+                AddressBox.Text = NamesBox.SelectedItem.ToString();
+            }
+        }
+
+        private void SendButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (AddressBox.Text == "")
+            {
+                System.Windows.MessageBox.Show("Введите имя адресата!");
+            }
+            else
+            {
+                string MessageText = new TextRange(MessageBox.Document.ContentStart, MessageBox.Document.ContentEnd).Text;
+                MainWindow.sendMessage(MainWindow.YourMailAddress, AddressBox.Text, ThemeBox.Text, MessageText);
+                System.Windows.MessageBox.Show("Сообщение отправлено!");
+                Close();
+            }
+        }
     }
+
+
+
 }

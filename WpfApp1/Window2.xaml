@@ -5,15 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Список пользователей" Height="450" Width="800"
-        Loaded = "Window_Loaded">
+        Title="Сообщение" Height="371.468" Width="853.601"
+        Loaded = "Window_Loaded" Background="#FF6A6A6A">
     <Grid>
-        <DataGrid Name="SQLGrid" HorizontalAlignment="Left" Height="376" VerticalAlignment="Top" Width="512" Margin="0,43,0,0"/>
-        <Button Content="Обновить базу данных" HorizontalAlignment="Left" Margin="552,10,0,0" VerticalAlignment="Top" Width="183" Click="Button_Click"/>
-        <Label Content="Список пользователей" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Width="223"/>
-        <Button Content="Найти" HorizontalAlignment="Left" Margin="552,146,0,0" VerticalAlignment="Top" Width="183" Click="Button_Click_1"/>
-        <Label Content="SQL-фильтр" HorizontalAlignment="Left" Margin="600,43,0,0" VerticalAlignment="Top" Width="85" FontStyle="Italic" RenderTransformOrigin="0.5,0.5"/>
-        <TextBox Name="SqlTextBox" HorizontalAlignment="Left" Height="67" Margin="552,74,0,0" TextWrapping="Wrap" Text="Введите sql-фильтр для выборки определенных данных" VerticalAlignment="Top" Width="183"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="71*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox Name="AddressBox" HorizontalAlignment="Left" Height="23" Margin="102,24,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="308" TextChanged="AddressBox_TextChanged" Background="#FF898989"/>
+        <Label Content="Получатель:" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top"/>
+        <ListBox Name="NamesBox" HorizontalAlignment="Left" Height="127" Margin="20,52,0,0" VerticalAlignment="Top" Width="390" SelectionChanged="NamesBox_SelectionChanged" Background="#FF979797"/>
+        <RichTextBox Name="MessageBox" Grid.Column="1" HorizontalAlignment="Left" Height="246" Margin="10,52,0,0" VerticalAlignment="Top" Width="406" Background="#FF999999">
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text=""/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button Name="SendButton" Content="Отправить" Grid.Column="1" HorizontalAlignment="Left" Margin="166,303,0,0" VerticalAlignment="Top" Width="75" Click="SendButton_Click"/>
+        <TextBox Name="ThemeBox" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="55,26,0,0" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="361" Background="#FF919191"/>
+        <Label Content="Тема:" HorizontalAlignment="Left" Margin="10,23,0,0" VerticalAlignment="Top" Grid.Column="1"/>
 
     </Grid>
 </Window>

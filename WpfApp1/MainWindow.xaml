@@ -1,19 +1,60 @@
-﻿<Window x:Class="WpfApp1.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="WpfApp1.MainWindow"
         mc:Ignorable="d"
-        Title="SQL Intergration" Height="450" Width="800" Cursor="Arrow"
-        Loaded = "Window_Loaded">
-    <Grid>
+        Title="КорресподенцияПро" Cursor="Arrow"
+        Loaded = "Window_Loaded" Background="#FF464646" BorderBrush="#FFC7C5C5" Height="537" Width="1565.578">
+    <Grid RenderTransformOrigin="0.5,0.474">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="54*"/>
-            <RowDefinition Height="365*"/>
+            <RowDefinition Height="506"/>
         </Grid.RowDefinitions>
-        <Button Content="Регистрация нового пользователя" HorizontalAlignment="Left" Margin="272,0,0,0" Grid.Row="1" VerticalAlignment="Top" Width="214" Click="Button_Click"/>
-        <Button Content="Список пользователей" HorizontalAlignment="Left" Margin="272,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="214" RenderTransformOrigin="0.55,-3.077" Click="Button_Click_1"/>
+        <Label Content="                         Рабочие папки" HorizontalAlignment="Left" Margin="224,59,0,0" VerticalAlignment="Top" Width="309" Background="#FF727272" Height="29" FontSize="14" FontWeight="Bold" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.116"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <ListBox Name="FoldersList" HorizontalAlignment="Left" Height="319" Margin="224,93,0,0" VerticalAlignment="Top" Width="309" BorderBrush="#FFB1B4BF" Background="#FF979797" SelectionChanged="FoldersList_SelectionChanged"/>
+        <Button Name="SendAndReceiveButton" Content="Принять и получить" HorizontalAlignment="Left" Margin="0,117,0,0" VerticalAlignment="Top" Width="189" Click="SendAndReceiveButton_Click"/>
+        <Button Name="AddEmailFolder" Content="Добавить рабочую папку" HorizontalAlignment="Left" Margin="224,417,0,0" VerticalAlignment="Top" Width="151" Click="AddEmailFolder_Click"/>
+        <Button Name="Time" Content="Дата получения" HorizontalAlignment="Left" Margin="646,60,0,0" VerticalAlignment="Top" Width="95" Background="#FF636363" Height="28" FontStyle="Italic"/>
+        <Button Name="ToWhere" Content="Получатель" HorizontalAlignment="Left" Margin="746,60,0,0" VerticalAlignment="Top" Width="251" Background="#FF636363" Height="28" FontStyle="Italic"/>
+        <Button Name="Theme" Content="Тема" HorizontalAlignment="Left" Margin="1002,60,0,0" VerticalAlignment="Top" Width="298" Background="#FF636363" Height="28" FontStyle="Italic"/>
+        <Button x:Name="SettingMailFolder" Content="Настроить рабочую папку" HorizontalAlignment="Left" Margin="380,417,0,0" VerticalAlignment="Top" Width="153" Click="SettingMailFolder_Click"/>
+        <Button Name="SelfSend" Content="Отправить себе случайное всообщение" HorizontalAlignment="Left" Margin="223,467,0,0" VerticalAlignment="Top" Width="309" Click="SelfSend_Click" IsCancel="True"/>
+        <StackPanel Name="MailModeBox" HorizontalAlignment="Left" Height="53" Margin="0,59,0,0" VerticalAlignment="Top" Width="170">
+            <RadioButton Content="Входящая корресподенция" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <RadioButton Content="Исходящая корресподенция" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+            <RadioButton Content="Архив" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        </StackPanel>
+        <Button Name="SendMailButton" Content="Написать сообщение" HorizontalAlignment="Left" Margin="538,272,0,0" VerticalAlignment="Top" Width="157" Click="SendMailButton_Click"/>
+        <ListBox Name="MessageListBox" HorizontalAlignment="Left" Height="174" Margin="538,93,0,0" VerticalAlignment="Top" Width="762" Background="#FF999999" SelectionChanged="MessageListBox_SelectionChanged" />
+        <Button Name="MessageCountButton" Content="Сообщения" HorizontalAlignment="Left" Margin="537,60,0,0" VerticalAlignment="Top" Width="104" Background="#FF636363" Height="28" HorizontalContentAlignment="Left" FontStyle="Italic"/>
+        <RichTextBox Name="MessageShow" HorizontalAlignment="Left" Height="175" Margin="700,273,0,0" VerticalAlignment="Top" Width="600" Background="#FF767676" TextChanged="MessageShow_TextChanged">
+            <FlowDocument>
+                <Paragraph>
+                    <Run/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <Button x:Name="SendMailButton_Copy" Content="Удалить сообщение" HorizontalAlignment="Left" Margin="538,297,0,0" VerticalAlignment="Top" Width="157" Click="SendMailButton_Copy_Click"/>
+        <Label Name="AccountNameLabel" Content="Вы зашли под " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="646" FontSize="16"/>
+        <Label Name="AdminRootLabel" Content="Вы не обладаете правами администратора" HorizontalAlignment="Left" Margin="1301,14,0,0" VerticalAlignment="Top"/>
+        <Button Content="Удалить рабочую папку" HorizontalAlignment="Left" Margin="223,442,0,0" VerticalAlignment="Top" Width="152" Click="Button_Click"/>
+
+
 
     </Grid>
 </Window>

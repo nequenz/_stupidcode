@@ -17,3 +17,9 @@ C:\Users\user\source\repos\WpfApp1\obj\Debug\Window1.g.cs
 C:\Users\user\source\repos\WpfApp1\obj\Debug\Window1.baml
 C:\Users\user\source\repos\WpfApp1\obj\Debug\Window2.g.cs
 C:\Users\user\source\repos\WpfApp1\obj\Debug\Window2.baml
+C:\Users\user\source\repos\WpfApp1\obj\Debug\Window3.g.cs
+C:\Users\user\source\repos\WpfApp1\obj\Debug\Window3.baml
+C:\Users\user\source\repos\WpfApp1\obj\Debug\LoginWindow.g.cs
+C:\Users\user\source\repos\WpfApp1\obj\Debug\LoginWindow.baml
+C:\Users\user\source\repos\WpfApp1\obj\Debug\RegistrarionWindow.g.cs
+C:\Users\user\source\repos\WpfApp1\obj\Debug\RegistrarionWindow.baml

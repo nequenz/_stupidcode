@@ -20,55 +20,86 @@ namespace WpfApp1
     /// </summary>
     public partial class Window1 : Window
     {
+
+        public Folder CurrentFF; 
+
+
+
+
         public Window1()
         {
             InitializeComponent();
-
-            ID.Text = HashID.ToString();
         }
 
-        private void TBname_TextChanged(object sender, TextChangedEventArgs e)
+
+        public void reloadFolder()
         {
-            HashID = (uint)TBname.Text.GetHashCode();
-            if (ID != null)
+            FolderDestinations.Items.Clear();
+
+            for (int i = 0; i < CurrentFF.getNameFilters().Count; i++)
             {
-                ID.Text = HashID.ToString();
+                FolderDestinations.Items.Add(CurrentFF.getNameFilters()[i]);
             }
-            
 
         }
 
-        private void Surname_TextChanged(object sender, TextChangedEventArgs e)
+        public void loadFolder(string FolderName)
         {
-            //Очень грубая форма хеш-функции, но для теста пойдет...
 
-            HashID += (uint)Surname.Text.GetHashCode();
-            if (ID != null)
-            {
-                ID.Text = HashID.ToString();
-            }
-                
+            CurrentFolder.Content   = FolderName;
+            CurrentFF               = Folder.getFolderByName(FolderName);
+
+            reloadFolder();
         }
 
+        public bool searchDuplicates()
+        {
+            for(int i = 0; i < CurrentFF.getNameFilters().Count; i++)
+            {
+                if(NameDestination.Text == CurrentFF.getNameFilters()[i])
+                {
+                    return true;
+                }
+            }
 
-
-
-
-        private  uint HashID = 0;
+            return false;
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.openConnection();
+            for (int i = 0; i < CurrentFF.getNameFilters().Count; i++)
+            {
+                if (CurrentFF.getNameFilters()[i] == FolderDestinations.SelectedItem.ToString())
+                {
+                    CurrentFF.getNameFilters().RemoveAt(i);
+                    break;
+                }
+            }
 
-            MainWindow.SQL = "use Users; insert into UserEntity(ID,Name,Surname,Email,Phone,Age) values ('"+(HashID).ToString()+"','"+TBname.Text+"','"+Surname.Text+"','"+Email.Text+"','"+Phone.Text+"','"+Age.Text+"');";
-            MainWindow.cmd.CommandType = CommandType.Text;
-            MainWindow.cmd.CommandText = MainWindow.SQL;
+            reloadFolder();
 
-            int LCount = MainWindow.cmd.ExecuteNonQuery();
+        }
 
-            if (LCount > 0) MessageBox.Show("Регистрация прошла успешна!\nЗатронуто строк:"+LCount.ToString());
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            if (NameDestination.Text == "")
+            {
+                MessageBox.Show("Пустое имя. Введите полное имя адресата.");
+                return;
 
-            MainWindow.closeConnection();
+            }else if(searchDuplicates())
+            {
+                MessageBox.Show("Данное имя уже используется. Введите другое имя адресата.");
+                return;
+            }
+            else
+            {
+                CurrentFF.getNameFilters().Add(NameDestination.Text);
+                reloadFolder();
+                MessageBox.Show("Адресант добавлен.");
+                return;
+            }
+
         }
     }
 }

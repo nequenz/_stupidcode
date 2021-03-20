@@ -33,10 +33,8 @@ namespace WpfApp1
         private int             Count=0;
 
         //статичные данные
-        public static List<Folder>  FolderList;      //V2
-
-        public static Folder[]      MyNameFilters  = null;
-        public static readonly int  FilterMaxCount = 100;
+        public static Folder[]   MyNameFilters;
+        public static readonly int          FilterMaxCount =100;
 
         public Folder(string _Name="Нет названия")
         {
@@ -44,7 +42,7 @@ namespace WpfApp1
             NameFilters = new List<string>();
         }
 
-        public string       getName()
+        public string getName()
         {
             return Name;
         }
@@ -54,50 +52,64 @@ namespace WpfApp1
             return NameFilters;
         }
 
-        public int          getCount()
-        {
-            return Count;
-        }
-
-        public void         setCount(int C)
+        public void setCount(int C)
         {
             Count = C;
         }
 
-
-        //V2
-        public static void      setStandartFolders()
+        public int getCount()
         {
-            FolderList  = new List<Folder>();
-            Folder F    = new Folder("Все");
-            FolderList.Add(F);
+            return Count;
         }
 
-        public static void      loadFolderListTo(ListBox LB)
+        public static void resetStandartNameFilters(ListBox LB)
         {
-            LB.Items.Clear();
+            MyNameFilters       = new Folder[FilterMaxCount];
 
-            for (int i = 0; i < FolderList.Count; i++)
+            MyNameFilters[0]    = new Folder("Начальство");
+
+            MyNameFilters[0].NameFilters.Add("Директор И.И А*****");
+            MyNameFilters[0].NameFilters.Add("Начальник сектора 01 А.П Р*****");
+            MyNameFilters[0].NameFilters.Add("Начальник сектора 02 H.T Е*****");
+            MyNameFilters[0].NameFilters.Add("Заместитель начальника сектора 02 О.О Л*****");
+
+
+
+            MyNameFilters[1] = new Folder("Рабочая рассылка");
+
+            MyNameFilters[1].NameFilters.Add("Рассылка от сектора 01");
+            MyNameFilters[1].NameFilters.Add("Рассылка от сектора 02");
+            MyNameFilters[1].NameFilters.Add("Рассылка от турагента 01");
+
+
+            MyNameFilters[2] = new Folder("Спам");
+
+            MyNameFilters[2].NameFilters.Add("Anywhere@box.ru");
+            MyNameFilters[2].NameFilters.Add("NOTSPAM");
+            MyNameFilters[2].NameFilters.Add("NOSPAMTOO");
+
+            MyNameFilters[3] = new Folder("Все");
+
+            MyNameFilters[3].NameFilters.Add("ALL");
+ 
+
+            if (LB!=null)
             {
-                LB.Items.Add(FolderList[i].getName());
-            }
-        }
-        
-        public static Folder    getFolderByName(string name)
-        {
-            for(int i = 0; i < FolderList.Count; i++)
-            {
-                if (FolderList[i].getName() == name)
+                LB.Items.Clear();
+
+                for(int i = 0; i < MyNameFilters.Length; i++)
                 {
-                    return FolderList[i];
+                    if (MyNameFilters[i] != null)
+                    {
+                        LB.Items.Add(MyNameFilters[i].Name);
+                    }
+                    
                 }
+
+
             }
 
-            return null;
         }
-
-        //--
-
 
         public static Folder getFilterByName(string name)
         {
@@ -190,10 +202,8 @@ namespace WpfApp1
         public static string            YourMailAddress = "Студент Бонча";
         public static Window1           WindowFolderSettting = null;
         public static string            MailSQLCode     = "";
+        private object                  PrevSelected    = null;
 
-        public static int               AccountID       = 0;
-        public static readonly string[] RootsStrings    = { "Роль [Пользователь]", "Роль [Администратор]" };
-        public static bool              AdminRoot       = false;
 
 
         public MainWindow()
@@ -204,33 +214,28 @@ namespace WpfApp1
 
         private void Window_Loaded(object Sender,RoutedEventArgs e)
         {
-            int RootID                  = Int32.Parse(getAccountByID(AccountID)[5]);
-            AccountNameLabel.Content    = "Вы зашли под "+getAccountByID(AccountID)[3]+" "+getAccountByID(AccountID)[4]+" "+ RootsStrings[RootID];
+            Folder.resetStandartNameFilters(FoldersList);
 
-            if (RootID == 1)
+        }
+
+        public static bool isWindowOpened(Type WType)
+        {
+            foreach (Window openWin in System.Windows.Application.Current.Windows)
             {
-                AdminRoot = true;
-                AdminRootLabel.Content = "Вы обладаете правами администратора";
-            }
-            else
-            {
-                AdminRoot               = false;
-                AdminRootLabel.Content  = "Вы не обладаете правами администратора";
+                if (openWin.GetType() == WType)
+                    return true;
             }
 
-
-            Folder.setStandartFolders();
-            Folder.loadFolderListTo(FoldersList);
+            return false;
         }
 
 
-
-        public static String    GetConnectionString()
+        public static String GetConnectionString()
         {
             return ConfigurationManager.ConnectionStrings["conString"].ToString();
         }
 
-        public static void      openConnection()
+        public static void openConnection()
         {
             try
             {
@@ -246,7 +251,7 @@ namespace WpfApp1
             }
         }
 
-        public static void      closeConnection()
+        public static void closeConnection()
         {
             try
             {
@@ -261,103 +266,7 @@ namespace WpfApp1
             }
         }
 
-        public static void      executeSQL(string Code)
-        {
-            MainWindow.openConnection();
-
-            MainWindow.DT.Clear();
-
-            MainWindow.SQL = Code;
-            MainWindow.cmd.CommandType = System.Data.CommandType.Text;
-            MainWindow.cmd.CommandText = MainWindow.SQL;
-
-            MainWindow.Adapter.SelectCommand = MainWindow.cmd;
-            MainWindow.Adapter.Fill(MainWindow.DT);
-
-            MainWindow.closeConnection();
-        }
-
-        public static string    getStringFromSql(string str)
-        {
-            int SIndex = str.IndexOf(' ');
-            if (SIndex == -1) SIndex = str.Length;
-
-            return str.Substring(0, SIndex);
-        }
-
-        public static string[]  getAccountByID(int ID)
-        {
-            executeSQL("SELECT [ID],[EmailName],[Name],[Surname],[Roots],[Password] FROM [Account]");
-
-            string[] Acc = new string[6];
-
-            Acc[0] = "Undefined";
-            Acc[1] = "Undefined";
-            Acc[2] = "Undefined";
-            Acc[3] = "Undefined";
-            Acc[4] = "Undefined";
-            Acc[5] = "Undefined";
-
-            for (int i = 0; i < DT.Rows.Count; i++)
-            {
-                string LID  = getStringFromSql(DT.Rows[i].ItemArray[2].ToString());
-
-                if (ID.ToString() == LID)
-                {
-
-                    Acc[0]          = getStringFromSql(DT.Rows[i].ItemArray[0].ToString());
-                    Acc[1]          = getStringFromSql(DT.Rows[i].ItemArray[1].ToString());
-                    Acc[2]          = getStringFromSql(DT.Rows[i].ItemArray[2].ToString());
-                    Acc[3]          = getStringFromSql(DT.Rows[i].ItemArray[3].ToString());
-                    Acc[4]          = getStringFromSql(DT.Rows[i].ItemArray[4].ToString());
-                    Acc[5]          = getStringFromSql(DT.Rows[i].ItemArray[5].ToString());
-
-                    return Acc;
-                }
-
-            }
-
-            return Acc;
-
-        }
-
-        public static string[]  getAccountByLogin(string Login)
-        {
-            executeSQL("SELECT [ID],[EmailName],[Name],[Surname],[Roots],[Password] FROM [Account]");
-
-            string[] Acc = new string[6];
-
-            Acc[0] = "Undefined";
-            Acc[1] = "Undefined";
-            Acc[2] = "Undefined";
-            Acc[3] = "Undefined";
-            Acc[4] = "Undefined";
-            Acc[5] = "Undefined";
-
-            for (int i = 0; i < DT.Rows.Count; i++)
-            {
-                string LID = getStringFromSql(DT.Rows[i].ItemArray[0].ToString());
-
-                if (Login == LID)
-                {
-
-                    Acc[0] = getStringFromSql(DT.Rows[i].ItemArray[0].ToString());
-                    Acc[1] = getStringFromSql(DT.Rows[i].ItemArray[1].ToString());
-                    Acc[2] = getStringFromSql(DT.Rows[i].ItemArray[2].ToString());
-                    Acc[3] = getStringFromSql(DT.Rows[i].ItemArray[3].ToString());
-                    Acc[4] = getStringFromSql(DT.Rows[i].ItemArray[4].ToString());
-                    Acc[5] = getStringFromSql(DT.Rows[i].ItemArray[5].ToString());
-
-                    return Acc;
-                }
-
-            }
-
-            return Acc;
-
-        }
-
-        public void             setNameFilters(int M)
+        public void setNameFilters(int M)
         {
             string Where = "";
 
@@ -427,63 +336,10 @@ namespace WpfApp1
 
         }
 
-        public void             chooseSendOrReceiveMode(int Mode)
-        {
-            if(FoldersList.SelectedItem == null) return;
 
-            if((string)FoldersList.SelectedItem == "Все")
-            {
-                //send
-                //receive
-                string[] SqlMode    = {  "SELECT [Sender],[Recipient],[Text],[DateSend],[DataReceive] FROM [Messages] WHERE([Sender]='" + AccountID.ToString() + "')"
-                                        ,"SELECT [Sender],[Recipient],[Text],[DateSend],[DataReceive] FROM [Messages] WHERE([Recipient]='" + AccountID.ToString() + ")"
-                                        ,""};
+        
 
-                executeSQL(SqlMode[Mode]);
-
-                for(int i = 0; i < DT.Rows.Count; i++)
-                {
-
-                        //to-do11111
-
-                }
-
-                return;
-
-            }
-
-
-
-
-
-            string Logins           = "SELECT [ID],[EmailName],[Name],[Surname] FROM [Account] WHERE(";
-            Folder SelectedFolder   = Folder.getFolderByName(FoldersList.SelectedItem.ToString());
-
-            for (int i = 0; i < SelectedFolder.getNameFilters().Count; i++)
-            {
-                if (i == 0)
-                {
-                    Logins += "[EmailName]='" + SelectedFolder.getNameFilters()[i] + "' ";
-                }
-                else
-                {
-                    Logins += " && [EmailName]='" + SelectedFolder.getNameFilters()[i] + "' ";
-                }
-                
-
-                if (i == (SelectedFolder.getNameFilters().Count - 1))
-                {
-                    Logins += ")";
-                }
-            }
-
-            executeSQL(Logins);
-
-
-            Console.WriteLine(Logins);
-        }
-
-        public void             getSQLBaseFromMail()
+        public void getSQLBaseFromMail()
         {
             openConnection();
 
@@ -536,7 +392,7 @@ namespace WpfApp1
 
         }
 
-        public static void      sendMessage(string _From,string _To,string _Theme,string _Text)
+        public static void sendMessage(string _From,string _To,string _Theme,string _Text)
         {
             string From = _From;
             string To   = _To;
@@ -561,6 +417,18 @@ namespace WpfApp1
         }
 
    
+
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            //--
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            //---
+        }
+
         private void SelfSend_Click(object sender, RoutedEventArgs e)
         { 
 
@@ -596,7 +464,6 @@ namespace WpfApp1
 
         private void SettingMailFolder_Click(object sender, RoutedEventArgs e)
         {
-
             if (FoldersList.SelectedItem != null)
             {
                 WindowFolderSettting = new Window1();
@@ -614,10 +481,6 @@ namespace WpfApp1
 
         private void SendAndReceiveButton_Click(object sender, RoutedEventArgs e)
         {
-
-            chooseSendOrReceiveMode(0);
-
-            /*
             RadioButton R0 = (RadioButton)MailModeBox.Children[0];
             RadioButton R1 = (RadioButton)MailModeBox.Children[1];
             RadioButton R2 = (RadioButton)MailModeBox.Children[2];
@@ -637,7 +500,6 @@ namespace WpfApp1
                 getSQLBaseFromMail();
                 MessageCountButton.Content = "Сообщения: "+ MessageListBox.Items.Count.ToString();
             }
-            */
         }
 
         private void SendMailButton_Click(object sender, RoutedEventArgs e)
@@ -684,36 +546,6 @@ namespace WpfApp1
         {
             Window3 W= new Window3(FoldersList);
             W.Show();
-
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (FoldersList.SelectedItem == null) return;
-
-            //EXCEPTION
-
-            if (FoldersList.SelectedItem.ToString() == "Все")
-            {
-                MessageBox.Show("Нельзя удалить данную папку");
-                return;
-            }
-
-            var Result = MessageBox.Show("Вы уверены что хотите удалить рабочую папку?", "Удаление папки",MessageBoxButton.YesNoCancel,MessageBoxImage.Question);
-
-            if (Result == MessageBoxResult.Yes)
-            {
-                for(int i = 0; i < Folder.FolderList.Count; i++)
-                {
-                    if (Folder.FolderList[i].getName()==FoldersList.SelectedItem.ToString())
-                    {
-                        Folder.FolderList.RemoveAt(i);
-                        Folder.loadFolderListTo(FoldersList);
-                        return;
-                    }
-                    
-                }
-            }
 
         }
     }
